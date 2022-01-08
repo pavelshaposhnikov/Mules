@@ -75,6 +75,19 @@ function increaseValue() {
     thickness: 26,
     startAngle: 4.75,
   });
+
+
+  var c4 = $('.counter-small');
+
+  c4.circleProgress({
+    value: 0.6,
+    lineCap: 'round',
+    fill: {gradient: ['#67B9DB', '#67DBB6']},
+    emptyFill: "#F4FAFC",
+    size: 230,
+    thickness: 21,
+    startAngle: 4.75,
+  });
  
 
 /* **** FAQ ACCORDION **** */
