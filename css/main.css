@@ -417,10 +417,6 @@ summary::marker {
     bottom: 75px;
 }
 
-.header .socials-item a:hover {
-    opacity: 0.8;
-}
-
 @media (max-width: 768px) {
 
     .header .socials {
@@ -455,33 +451,10 @@ summary::marker {
 @media (max-width: 428px) {
 
     .mobile-nav .nav__list {
-        margin-top: 175px;
+        margin-top: 200px;
     }
 
-    .mobile-nav.is-open .socials img {
-        height: 15px;
-        width: 15px;
-    }
-
-    .mobile-nav.is-open .socials {
-        left: 130px;
-        top: 525px;
-    }
 }
-
-@media (max-width: 365px) {
-    .mobile-nav.is-open .socials {
-        left: 109px;
-        top: 525px;
-    }
-}
-
-@media (max-width: 320px) {
-    .mobile-nav.is-open .socials {
-        left: 75px;
-    }
-}
-
 
 /*========================
          General 
@@ -1182,7 +1155,7 @@ summary::marker {
     text-align: center;
     background: linear-gradient(225.17deg, #67B9DB 28.66%, #67DBB6 73.54%);
     -webkit-background-clip: text;
-    -webkit-text-fill-color: rgba(255,255,255,0);
+    -webkit-text-fill-color: rgba(0, 0, 0, 0);
 }
 
 @media (max-width: 990px) {
@@ -1276,6 +1249,10 @@ summary::marker {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+    }
+
+    .map::before {
+        bottom: 463px;
     }
 }
 
@@ -1470,6 +1447,14 @@ summary::marker {
 
     .team__card::before {
         top: 225px;
+    }
+
+    .team:after {
+        bottom: 709px;
+    }
+
+    .team::before {
+        bottom: 200px;
     }
 }
 
