@@ -630,6 +630,10 @@ summary::marker {
         font-size: 16px;
         max-width: 303px;
     }
+
+    .general::before {
+        max-width: 710px;
+    }
 }
 
 /*========================
@@ -804,9 +808,13 @@ summary::marker {
     }
 }
 
-@media (max-width: 428px) {
+@media (max-width: 429px) {
     .mint__info-img {
         max-width: 109px;
+    }
+
+    .mint::before {
+        max-width: 710px;
     }
 }
 
@@ -1482,6 +1490,11 @@ summary::marker {
 
     .team::before {
         bottom: 200px;
+        max-width: 710px;
+    }
+
+    .team::after {
+        max-width: 710px;
     }
 }
 
@@ -1817,5 +1830,9 @@ summary::marker {
         max-width: 20px;
         width: 100%;
         height: 20px;
+    }
+
+    .footer::before, .footer::after {
+        max-width: 710px;
     }
 }
