@@ -19,6 +19,7 @@ body {
     border: 20px solid #000;
     border-image: url(https://static.wixstatic.com/media/fc1ef4_deb28715cd2a4986a56ef441fc13cfa1~mv2.png/v1/fill/w_1440,h_147,al_c,q_85,usm_0.66_1.00_0.01/fc1ef4_deb28715cd2a4986a56ef441fc13cfa1~mv2.webp) 20 20 / 20px 20px / 0rem;
     height: 900px;
+    overflow: hidden;
 }
 
 .linker__wrap {
