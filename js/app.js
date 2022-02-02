@@ -38,6 +38,7 @@ function increaseValue() {
   }
 
 
+ /* **** Roadmap circle **** */ 
 
   var c4 = $('.counter');
 

@@ -221,7 +221,10 @@ body {
 
     .linker {
         padding-top: 100px;
-        height: 710px;
+        height: 730px;
+        border-image: none;
+        position: fixed;
+        width: 100%;
     }
 
     .linker__img-second {
