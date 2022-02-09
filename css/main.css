@@ -1736,7 +1736,7 @@ summary::marker {
 }
 
 .footer__mint {
-    margin-top: 200px;
+    margin-top: 300px;
 }
 
 .footer::before {
@@ -1900,6 +1900,11 @@ summary::marker {
 }
 
 @media (max-width: 428px) {
+
+    .footer__mint {
+        margin-top: 200px;
+    }
+
     .footer__title {
         font-size: 36px;
     }
