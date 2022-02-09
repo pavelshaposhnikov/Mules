@@ -814,10 +814,6 @@ summary::marker {
 
 @media (max-width: 768px) {
 
-    .mint__inner {
-        margin-top: 200px;
-    }
-
     .mint__info-img {
         max-width: 210px;
     }
@@ -855,10 +851,6 @@ summary::marker {
 }
 
 @media (max-width: 490px) {
-
-    .mint__inner {
-        margin-top: 140px;
-    }
 
     .mint__btn {
         width: 135px;
