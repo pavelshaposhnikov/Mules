@@ -140,7 +140,7 @@
                                 >
                                     -
                                 </div>
-                                <input type="number" id="number" value="1" max="10" disabled/="">
+                                <input type="number" id="number" value="1" max="10" disabled="">
                                 <div
                                     class="mint__calc-btn"
                                     id="increase"
@@ -153,14 +153,17 @@
                             <div class="mint__price">
                                 <span><span id="price">0.1</span>eth</span>
                             </div>
-                            <div target="_blank" class="mint__btn btn" id="mintBtn">Mint</div>
-                            <div target="_blank" class="mint__btn btn-white btn" id="connectWalletBtn">
+                            <button class="mint__btn btn" id="mintBtn">Mint</button>
+                            <button class="mint__btn btn-white btn" id="connectWalletBtn">
                                 Connect Wallet
-                            </div>
+                            </button>
                         </div>
                         <img src="img/mint/mule2.png" alt="Mule" class="mint__info-img" />
                     </div> 
-                </div> 
+                </div>
+                <div class="mint__counter">
+                    <span id="mintCounter">0</span> / 7,777
+                </div>
             </div> 
         </section> 
 
@@ -216,6 +219,19 @@
                 </div> <!-- /.footer__inner -->
             </div> <!-- /.container -->
         </footer> <!-- /.footer -->
+
+        <div id="popup" class="popup">
+            <div class="popup__wrapper">
+                <div class="popup__error-icon">
+                    <img src="img/icons/alert.svg" title="alert" alt="alert">
+                </div>
+                <div>
+                    <h4 class="popup__title">Error alert!</h4>
+                    <p class="popup__desc">Error description text</p>
+                </div>
+                <button id="popupBtnClose" class="popup__btn-close">x</button>
+            </div>
+        </div> <!-- /.popup -->
 
         <!-- ethers library -->
         <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>

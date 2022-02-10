@@ -8,11 +8,20 @@ const config = {
 const mintBtn = document.getElementById("mintBtn");
 const connectWalletBtn = document.getElementById("connectWalletBtn");
 const counter = document.getElementById("number");
+const popup = document.getElementById("popup");
+const popupBtnClose = document.getElementById("popupBtnClose");
 const mintedCounter = document.getElementById("mintCounter");
 
 const prettyNumber = (num) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
+
+const alertError = (show, text) => {
+    const desc = popup.querySelector(".popup__desc");
+    const status = show ? "add" : "remove";
+    popup.classList[status]("popup--open");
+    desc.textContent = text;
+}
 
 const detectMetaMask = (ethereum) => {
     if (ethereum?.providers) {
@@ -34,13 +43,8 @@ const detectMetaMask = (ethereum) => {
 
 const checkIsWalletConnected = async () => {
     try {
-        if (!provider) {
-            alert("Please install metamask extension!")
-            return;
-        }
 
-        if (provider.networkVersion !== config.mainChainId) {
-            await changeNetwork();
+        if (!provider) {
             return;
         }
 
@@ -52,29 +56,30 @@ const checkIsWalletConnected = async () => {
             connectWalletBtn.textContent = "CONNECTED";
         }
     } catch (error) {
-        alert(error);
+        alertError(true, error?.data?.originalError?.message || error.message);
     }
 };
 
 const connectWallet = async () => {
     try {
         if (!provider) {
-            alert("Please install metamask extension!");
+            alertError(true, "Please install metamask extension!");
             return;
         }
 
         if (provider.networkVersion !== config.mainChainId) {
+            alertError(true, "Please change network to Ethereum!");
             await changeNetwork();
             return;
         }
 
         const accounts = await provider.request({method: "eth_requestAccounts"});
-
         account = accounts[0];
         connectWalletBtn.disabled = true;
         connectWalletBtn.textContent = "CONNECTED";
+        window.location.reload();
     } catch (error) {
-        alert(error);
+        alertError(true, error?.data?.originalError?.message || error.message);
     }
 };
 
@@ -85,11 +90,18 @@ const changeNetwork = async () => {
             chainId: `0x${config.mainChainId.toString(16)}`
         }]
     });
+    window.location.reload();
 };
 
 const mint = async () => {
     try {
-        if (!provider || !account) {
+        if (!provider) {
+            alertError(true, "Please install metamask extension!");
+            return;
+        }
+
+        if (!account) {
+            alertError(true, "Please connect your wallet.");
             return;
         }
 
@@ -121,10 +133,10 @@ const mint = async () => {
         } catch (error) {
             mintBtn.disabled = false;
             mintBtn.textContent = "Mint";
-            alert(error.data.message);
+            alertError(true, error?.data?.message || error.message);
         }
     } catch (error) {
-        alert(error);
+        alertError(true, error?.data?.originalError?.message || error.message);
     }
 };
 
@@ -132,38 +144,34 @@ const {ethereum} = window;
 const provider = detectMetaMask(ethereum);
 let account;
 
-if (provider) {
-    const currentProvider = new ethers.providers.Web3Provider(provider);
-    const signer = currentProvider.getSigner();
-    const nftContract = new ethers.Contract(config.contractAddress, ABI, signer);
-    let debounce;
+window.addEventListener("load", async () => {
+    await checkIsWalletConnected();
 
-    nftContract.on("Transfer", () => {
-        clearTimeout(debounce);
-        debounce = setTimeout(async () => {
-            const counter = await nftContract.totalSupply();
-            mintedCounter.textContent = prettyNumber(counter.toString());
-        }, 500);
-    });
+    if (provider && account) {
+        const currentProvider = new ethers.providers.Web3Provider(provider);
+        const signer = currentProvider.getSigner();
+        const nftContract = new ethers.Contract(config.contractAddress, ABI, signer);
+        let debounce;
 
-    provider.on("chainChanged", () => {
-        window.location.reload();
-    });
-
-    provider.on("accountsChanged", () => {
-        window.location.reload();
-    });
-}
-
-window.addEventListener("load", () => {
-    checkIsWalletConnected();
+        nftContract.on("Transfer", () => {
+            clearTimeout(debounce);
+            debounce = setTimeout(async () => {
+                const counter = await nftContract.totalSupply();
+                mintedCounter.textContent = prettyNumber(counter.toString());
+            }, 500);
+        });
+    }
 })
 
-connectWalletBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    connectWallet();
+connectWalletBtn.addEventListener("click", async () => {
+    await connectWallet();
 });
 
-mintBtn.addEventListener("click", (e) => {
-    mint();
+popupBtnClose.addEventListener("click", (e) => {
+    e.preventDefault();
+    alertError(false, "");
+})
+
+mintBtn.addEventListener("click", async () => {
+    await mint();
 });
