@@ -1,9 +1,5 @@
 import ABI from "./abi.js";
-
-const config = {
-    mainChainId: "1337",
-    contractAddress: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
-};
+import config from "./config.js";
 
 const mintBtn = document.getElementById("mintBtn");
 const connectWalletBtn = document.getElementById("connectWalletBtn");
@@ -140,7 +136,7 @@ const mint = async () => {
         } catch (error) {
             mintBtn.disabled = false;
             mintBtn.textContent = "Mint";
-            alertError(true, error?.data?.message || error.message);
+            alertError(true, error.error.message || error?.data?.originalError?.message || error?.data?.message || error.message);
         }
     } catch (error) {
         alertError(true, error?.data?.originalError?.message || error.message);
@@ -158,15 +154,17 @@ window.addEventListener("load", async () => {
         const currentProvider = new ethers.providers.Web3Provider(provider);
         const signer = currentProvider.getSigner();
         const nftContract = new ethers.Contract(config.contractAddress, ABI, signer);
-        let debounce;
 
-        nftContract.on("Transfer", () => {
-            clearTimeout(debounce);
-            debounce = setTimeout(async () => {
-                const counter = await nftContract.totalSupply();
-                mintedCounter.textContent = prettyNumber(counter.toString());
-            }, 500);
-        });
+        const setMintedCounter = async () => {
+            const counter = await nftContract.totalSupply();
+            mintedCounter.textContent = prettyNumber(counter.toString());
+        };
+
+        await setMintedCounter();
+
+        setTimeout(async () => {
+            await setMintedCounter()
+        }, 5000);
     }
 })
 
