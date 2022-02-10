@@ -30,6 +30,16 @@ export default [
                 "internalType": "uint256",
                 "name": "limitPerAccount_",
                 "type": "uint256"
+            },
+            {
+                "internalType": "address",
+                "name": "wallet_",
+                "type": "address"
+            },
+            {
+                "internalType": "string",
+                "name": "baseURIAddress_",
+                "type": "string"
             }
         ],
         "stateMutability": "nonpayable",
@@ -219,6 +229,19 @@ export default [
         "type": "function"
     },
     {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "baseURI_",
+                "type": "string"
+            }
+        ],
+        "name": "changeBaseURI",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
         "inputs": [],
         "name": "freeTokensAmount",
         "outputs": [
@@ -304,19 +327,6 @@ export default [
             }
         ],
         "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "_count",
-                "type": "uint256"
-            }
-        ],
-        "name": "mint",
-        "outputs": [],
-        "stateMutability": "nonpayable",
         "type": "function"
     },
     {
