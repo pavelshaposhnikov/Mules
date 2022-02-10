@@ -43,6 +43,12 @@ summary::marker {
         Common Styles 
 ==========================*/
 
+.body__mint {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
 .title {
     font-family: 'Lato', sans-serif;
     font-size: 64px;
@@ -215,10 +221,35 @@ summary::marker {
     transition: all 0.8s;
 }
 
+.socials-item a:first-child {
+    width: auto;
+    height: 35px;
+}
+
+.btn-socials {
+    font-size: 14px;
+    border-radius: 25px;
+    padding: 10px 20px;
+    margin-right: 10px;
+}
+
+.btn-socials:hover {
+    opacity: 1 !important;
+}
+
 .socials-item a:hover {
     opacity: 0.4;
     transition: all 0.8s;
 }
+
+.socials-btns {
+    display: flex;
+}
+
+.socials-btns .socials-item:first-child {
+    margin-right: 0;
+}
+
 
 /* MOBILE NAV */ 
 
@@ -475,6 +506,11 @@ summary::marker {
         margin-top: 200px;
     }
 
+    .btn-socials {
+        font-size: 10px;
+        padding: 5px 10px;
+    }
+
 }
 
 /*========================
@@ -678,7 +714,7 @@ summary::marker {
 }
 
 .mint__inner {
-    margin-top: 150px;
+    margin-top: 250px;
 }
 
 .mint__counter {
@@ -787,6 +823,7 @@ summary::marker {
 }
 
 @media (max-width: 768px) {
+
     .mint__info-img {
         max-width: 210px;
     }
@@ -824,6 +861,7 @@ summary::marker {
 }
 
 @media (max-width: 490px) {
+
     .mint__btn {
         width: 135px;
         font-size: 13px;
@@ -841,6 +879,15 @@ summary::marker {
 }
 
 @media (max-width: 429px) {
+
+    .mint::before {
+        background: none;
+    }
+
+    .mint .title {
+        font-size: 30px;
+    }
+
     .mint__info-img {
         max-width: 109px;
     }
@@ -1591,6 +1638,7 @@ summary::marker {
     display: flex;
     justify-content: space-between;
     margin-top: 60px;
+    align-items: center;
 }
 
 .faq__accordion {
@@ -1695,6 +1743,10 @@ summary::marker {
     position: relative;
     padding-bottom: 45px;
     margin-top: 100px;
+}
+
+.footer__mint {
+    margin-top: 300px;
 }
 
 .footer::before {
@@ -1858,6 +1910,11 @@ summary::marker {
 }
 
 @media (max-width: 428px) {
+
+    .footer__mint {
+        margin-top: 200px;
+    }
+
     .footer__title {
         font-size: 36px;
     }

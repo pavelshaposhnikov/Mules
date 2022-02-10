@@ -24,7 +24,7 @@
         <!-- Styles -->
         <link rel="stylesheet" href="css/main.css" />
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-        <link rel="icon" href="img/icons/logo-icon.svg" type="image/x-icon" />
+        <link rel="icon" href="img/icons/favicon.png" type="image/x-icon" />
     </head>
     <body id="body">
         <header class="header" id="header">
@@ -42,9 +42,6 @@
                         <ul class="nav__list">
                             <li class="nav__item">
                                 <a href="#" class="nav__link" target="_blank" data-scroll="#header">主要的</a>
-                            </li>
-                            <li class="nav__item">
-                                <a href="#" class="nav__link" target="_blank" data-scroll="#mint">薄荷</a>
                             </li>
                             <li class="nav__item">
                                 <a href="#" class="nav__link" target="_blank" data-scroll="#about">关于</a>
@@ -66,18 +63,22 @@
                             <span class="burger"></span>
                             <span class="burger-text">菜单</span>
                         </button>
-                        <li class="socials-item">
-                            <a href="index.html">
-                                <img src="img/icons/eng.png" alt="Eng icon" />
-                            </a>
-                        </li>
+                        <ul class="socials-btns">
+                            <li class="socials-item">
+                                <a href="mint_ch.html" class="btn btn-socials">
+                                    薄荷
+                                </a>
+                            </li>
+                            <li class="socials-item">
+                                <a href="index.html">
+                                    <img src="img/icons/eng.png" alt="Eng icon" />
+                                </a>
+                            </li>
+                        </ul>
                         <nav class="mobile-nav" id="mobile-nav">
                             <ul class="nav__list">
                                 <li class="nav__item">
                                     <a href="#" class="nav__link" target="_blank" data-scroll="#header">主要的</a>
-                                </li>
-                                <li class="nav__item">
-                                    <a href="#" class="nav__link" target="_blank" data-scroll="#mint">薄荷</a>
                                 </li>
                                 <li class="nav__item">
                                     <a href="#" class="nav__link" target="_blank" data-scroll="#about">关于</a>
@@ -97,6 +98,11 @@
                     </div> <!-- /.mobile__nav-wrapper -->
                     <!-- /.mobile__nav-wrapper -->
                     <ul class="socials">
+                        <li class="socials-item">
+                            <a href="mint_ch.html" class="btn btn-socials">
+                                薄荷
+                            </a>
+                        </li>
                         <li class="socials-item">
                             <a href="https://discord.com/" target="_blank">
                                 <img src="img/icons/ds.svg" alt="Ds icon" />
@@ -148,7 +154,7 @@
                         <div class="general__desc">
                             <p class="general__desc-text">
                                 <span>华尔街骡子</span> 是一个集合
-                                <span>8,888个独特的NFT</span> 住在国内区块子上。 你的
+                                <span>7,777个独特的NFT</span> 住在国内区块子上。 你的
                                 <span>华尔街骡子</span> 会员卡授予仅适用于员工的福利和独家莱佛士。
                             </p>
                             <div class="general__buttons">
@@ -164,86 +170,6 @@
                 </div>
             </div> <!-- /.container -->
         </section> <!-- /.general -->
-
-        <!-- <section class="mint" id="mint">
-            <div class="container">
-                <div class="mint__inner">
-                    <div class="mint__info">
-                        <img src="img/mint/mule1.png" alt="Mule" class="mint__info-img" />
-                        <div class="mint__content">
-                            <h2 class="title">薄荷部分</h2>
-                            <div class="mint__calc">
-                                <div
-                                    class="mint__calc-btn"
-                                    id="decrease"
-                                    onclick="decreaseValue()"
-                                    value="Decrease Value"
-                                >
-                                    -
-                                </div>
-                                <input type="number" id="number" value="1" max="10" disabled/="">
-                                <div
-                                    class="mint__calc-btn"
-                                    id="increase"
-                                    onclick="increaseValue()"
-                                    value="Increase Value"
-                                >
-                                    +
-                                </div>
-                            </div>
-                            <div class="mint__price">
-                                <span><span id="price">0.1</span>eth</span>
-                            </div>
-                            <div target="_blank" class="mint__btn btn" id="mintBtn">薄荷</div>
-                            <div target="_blank" class="mint__btn btn-white btn" id="connectWalletBtn">
-                                连接钱包
-                            </div>
-                        </div>
-                        <img src="img/mint/mule2.png" alt="Mule" class="mint__info-img" />
-                    </div> 
-                </div> 
-            </div> 
-        </section> -->
-
-        <section class="mint" id="mint">
-            <div class="container">
-                <div class="mint__inner">
-                    <div class="mint__info">
-                        <img src="img/mint/mule1.png" alt="Mule" class="mint__info-img" />
-                        <div class="mint__content">
-                            <h2 class="title">薄荷部分</h2>
-                            <div class="mint__calc">
-                                <div
-                                    class="mint__calc-btn"
-                                    id="decrease"
-                                    onclick="decreaseValue()"
-                                    value="Decrease Value"
-                                >
-                                    -
-                                </div>
-                                <input type="number" id="number" value="1" max="10" disabled/="">
-                                <div
-                                    class="mint__calc-btn"
-                                    id="increase"
-                                    onclick="increaseValue()"
-                                    value="Increase Value"
-                                >
-                                    +
-                                </div>
-                            </div>
-                            <div class="mint__price">
-                                <span><span id="price">0.1</span>eth</span>
-                            </div>
-                            <a target="_blank" class="mint__btn btn">即将铸造</a>
-                            <div target="_blank" class="mint__btn btn-white btn" id="connectWalletBtn">
-                                连接钱包
-                            </div>
-                        </div>
-                        <img src="img/mint/mule2.png" alt="Mule" class="mint__info-img" />
-                    </div> 
-                </div> 
-            </div> 
-        </section>
 
         <section class="about" id="about">
             <div class="container">
@@ -265,7 +191,7 @@
                     </ul>
                     <div class="about__desc">
                         <p class="about__desc-text">
-                            <span>8,888个Meta时尚头像的集合</span> 基于Ethereum Blockchain。
+                            <span>7,777个Meta时尚头像的集合</span> 基于Ethereum Blockchain。
                             每个独特 <span>华尔街骡子</span> 是从组合中随机生成的
                             <span>分别为99.</span> 绘制的元素，包括
                             <span>超过55种不同的服装</span>
@@ -283,7 +209,7 @@
                                     <img src="img/icons/supply.svg" alt="Icon" />
                                 </div>
                                 <p class="about__item-name">供应</p>
-                                <p class="about__item-value">8,888</p>
+                                <p class="about__item-value">7,777</p>
                             </li>
                             <li class="about__info-item">
                                 <div class="about__item-img">
@@ -377,10 +303,7 @@
                                 <div class="map__card-content">
                                     <h3 class="map__card-title">完毕!</h3>
                                     <p class="map__text">
-                                        推出我们的发展路线图,
-                                        <span
-                                            >抬起头，钻石手将有机会制作被动收入</span
-                                        >
+                                        <span>抬起头，钻石手将有机会制作被动收入</span>
                                         通过抱着你的
                                         <span><span class="map__text-blue">骡子</span> 华尔街！</span>
                                     </p>
@@ -468,7 +391,7 @@
                                         </p>
                                     </div>
                                 </li>
-                                <li class="faq__accordion-item active">
+                                <li class="faq__accordion-item">
                                     <div class="faq__accordion-title">
                                         <h3>我在哪里可以查看我的NFT?</h3>
                                         <span class="faq__accordion-icon"></span>
