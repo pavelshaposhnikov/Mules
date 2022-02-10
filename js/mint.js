@@ -1,87 +1,169 @@
 import ABI from "./abi.js";
 
 const config = {
-    mainChainId: 4,
-    contractAddress: "0xA7f98789bd7585aB8879ae43417f647de17BFBa6",
+    mainChainId: "1337",
+    contractAddress: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
 };
 
-const mintBtn = document.querySelector("#mintBtn");
-const connectWalletBtn = document.querySelector("#connectWalletBtn");
-const amountToMintEl = document.querySelector("#number");
+const mintBtn = document.getElementById("mintBtn");
+const connectWalletBtn = document.getElementById("connectWalletBtn");
+const counter = document.getElementById("number");
+const mintedCounter = document.getElementById("mintCounter");
 
-const ethereum = window.ethereum;
-let contractInstance;
-let currentNetwork;
-let signer;
-let provider;
+const prettyNumber = (num) => {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
 
-async function switchNetwork() {
+const detectMetaMask = (ethereum) => {
+    if (ethereum?.providers) {
+        const isMetaMask = ethereum.providers.find((provider) => provider.isMetaMask);
+
+        if (isMetaMask) {
+            return isMetaMask;
+        } else {
+            return false;
+        }
+    } else {
+        if (ethereum?.isMetaMask) {
+            return ethereum;
+        } else {
+            return false;
+        }
+    }
+};
+
+const checkIsWalletConnected = async () => {
     try {
-        await ethereum.request({
-            method: "wallet_switchEthereumChain",
-            params: [{ chainId: `0x${config.mainChainId.toString(16)}` }],
-        });
-    } catch (err) {
-        alert(err);
-    }
-}
+        if (!provider) {
+            alert("Please install metamask extension!")
+            return;
+        }
 
-async function checkConnection() {
-    if (!contractInstance) {
-        await connect();
-    }
-    if (ethereum.networkVersion !== config.mainChainId) {
-        await switchNetwork();
-    }
+        if (provider.networkVersion !== config.mainChainId) {
+            await changeNetwork();
+            return;
+        }
 
-    return true;
-}
+        const accounts = await provider.request({method: "eth_accounts"});
 
-async function connect() {
+        if (accounts.length !== 0) {
+            account = accounts[0];
+            connectWalletBtn.disabled = true;
+            connectWalletBtn.textContent = "CONNECTED";
+        }
+    } catch (error) {
+        alert(error);
+    }
+};
+
+const connectWallet = async () => {
     try {
-        if (ethereum) {
-            currentNetwork = ethereum.networkVersion;
-            if (currentNetwork !== config.mainChainId) {
-                await switchNetwork();
-            }
-            // connecting to Metamask
-            // accounts[0] - userWallet
-            const accounts = await ethereum.request({
-                method: "eth_requestAccounts",
-            });
+        if (!provider) {
+            alert("Please install metamask extension!");
+            return;
+        }
 
-            provider = new ethers.providers.Web3Provider(ethereum);
-            signer = provider.getSigner();
-            contractInstance = new ethers.Contract(config.contractAddress, ABI, signer);
+        if (provider.networkVersion !== config.mainChainId) {
+            await changeNetwork();
+            return;
+        }
 
-            if (contractInstance) {
-                connectWalletBtn.disabled = true;
-                connectWalletBtn.textContent = "CONNECTED";
-            }
-        } else alert("Install Metamask!");
-    } catch (err) {
-        alert(err);
+        const accounts = await provider.request({method: "eth_requestAccounts"});
+
+        account = accounts[0];
+        connectWalletBtn.disabled = true;
+        connectWalletBtn.textContent = "CONNECTED";
+    } catch (error) {
+        alert(error);
     }
-}
+};
 
-async function mint() {
-    await checkConnection();
-    const amountToMint = +amountToMintEl.value;
+const changeNetwork = async () => {
+    await provider.request({
+        method: "wallet_switchEthereumChain",
+        params: [{
+            chainId: `0x${config.mainChainId.toString(16)}`
+        }]
+    });
+};
+
+const mint = async () => {
     try {
-        const price = await contractInstance.PRICE();
+        if (!provider || !account) {
+            return;
+        }
 
-        await contractInstance.mintPublic(amountToMint, {
-            value: price.mul(amountToMint),
-        });
-    } catch (err) {
-        alert(err);
+        if (provider.networkVersion !== config.mainChainId) {
+            await changeNetwork();
+            return;
+        }
+
+        const counterNFT = counter.value;
+
+        const currentProvider = new ethers.providers.Web3Provider(provider);
+        const signer = currentProvider.getSigner();
+        const nftContract = new ethers.Contract(config.contractAddress, ABI, signer);
+
+        const price = await nftContract.getPrice(counterNFT);
+
+        const overrides = {
+            value: price  // ether in this case MUST be a string
+        };
+
+        mintBtn.disabled = true;
+        mintBtn.textContent = "Minting...";
+
+        try {
+            const trx = await nftContract.buy(counterNFT, overrides);
+            await trx.wait();
+            mintBtn.disabled = false;
+            mintBtn.textContent = "Mint";
+        } catch (error) {
+            mintBtn.disabled = false;
+            mintBtn.textContent = "Mint";
+            alert(error.data.message);
+        }
+    } catch (error) {
+        alert(error);
     }
+};
+
+const {ethereum} = window;
+const provider = detectMetaMask(ethereum);
+let account;
+
+if (provider) {
+    const currentProvider = new ethers.providers.Web3Provider(provider);
+    const signer = currentProvider.getSigner();
+    const nftContract = new ethers.Contract(config.contractAddress, ABI, signer);
+    let debounce;
+
+    nftContract.on("Transfer", () => {
+        clearTimeout(debounce);
+        debounce = setTimeout(async () => {
+            const counter = await nftContract.totalSupply();
+            mintedCounter.textContent = prettyNumber(counter.toString());
+        }, 500);
+    });
+
+    provider.on("chainChanged", () => {
+        window.location.reload();
+    });
+
+    provider.on("accountsChanged", () => {
+        window.location.reload();
+    });
 }
 
-connectWalletBtn.addEventListener("click", async ({ target }) => {
-    await connect();
+window.addEventListener("load", () => {
+    checkIsWalletConnected();
+})
+
+connectWalletBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    connectWallet();
 });
 
-mintBtn.addEventListener("click", () => {
+mintBtn.addEventListener("click", (e) => {
     mint();
 });
