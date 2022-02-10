@@ -729,6 +729,13 @@ summary::marker {
     height: 100%;
 }
 
+.mint__counter {
+    margin-top: 15px;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 20px;
+}
+
 .mint__calc {
     display: flex;
     justify-content: center;
@@ -876,6 +883,14 @@ summary::marker {
 
     .mint .title {
         font-size: 30px;
+    }
+
+    .mint__counter {
+        font-size: 15px;
+    }
+
+    .mint__calc {
+        margin-top: 25px;
     }
 
     .mint__info-img {
