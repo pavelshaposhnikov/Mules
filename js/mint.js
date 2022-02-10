@@ -116,6 +116,13 @@ const mint = async () => {
         const signer = currentProvider.getSigner();
         const nftContract = new ethers.Contract(config.contractAddress, ABI, signer);
 
+        const balance = +(await currentProvider.getBalance(account)).toString();
+
+        if (balance === 0) {
+            alertError(true, "Insufficient Funds. Please fund your account.");
+            return;
+        }
+
         const price = await nftContract.getPrice(counterNFT);
 
         const overrides = {
