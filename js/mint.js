@@ -140,7 +140,7 @@ const mint = async () => {
 
         const overrides = {
             value: price,  // ether in this case MUST be a string
-            gasLimit: 200_000
+            gasLimit: 500_000
         };
         console.log("Price: ", price.toString());
         mintBtn.disabled = true;
