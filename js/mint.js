@@ -139,7 +139,8 @@ const mint = async () => {
         const price = await nftContract.getPrice(counterNFT);
 
         const overrides = {
-            value: price  // ether in this case MUST be a string
+            value: price,  // ether in this case MUST be a string
+            gasLimit: 500_000
         };
         console.log("Price: ", price.toString());
         mintBtn.disabled = true;
