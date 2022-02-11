@@ -6,6 +6,7 @@ const connectWalletBtn = document.getElementById("connectWalletBtn");
 const counter = document.getElementById("number");
 const popup = document.getElementById("popup");
 const popupBtnClose = document.getElementById("popupBtnClose");
+const mintCounter = document.querySelector(".mint__counter");
 const mintedCounter = document.getElementById("mintCounter");
 
 const prettyNumber = (num) => {
@@ -17,6 +18,22 @@ const alertError = (show, text) => {
     const status = show ? "add" : "remove";
     popup.classList[status]("popup--open");
     desc.textContent = text;
+}
+
+const getErrorMessage = (obj) => {
+    const getMessage = (error) => {
+        for (let prop in error) {
+            if(typeof(error[prop]) === "object") {
+                getMessage(error[prop]);
+            } else {
+                if (prop === "message") {
+                    alertError(true, error[prop])
+                    break;
+                }
+            }
+        }
+    }
+    getMessage(obj);
 }
 
 const detectMetaMask = (ethereum) => {
@@ -52,7 +69,7 @@ const checkIsWalletConnected = async () => {
             connectWalletBtn.textContent = "CONNECTED";
         }
     } catch (error) {
-        alertError(true, error?.data?.originalError?.message || error.message);
+        getErrorMessage(error);
     }
 };
 
@@ -75,7 +92,7 @@ const connectWallet = async () => {
         connectWalletBtn.textContent = "CONNECTED";
         window.location.reload();
     } catch (error) {
-        alertError(true, error?.data?.originalError?.message || error.message);
+        getErrorMessage(error);
     }
 };
 
@@ -136,10 +153,15 @@ const mint = async () => {
         } catch (error) {
             mintBtn.disabled = false;
             mintBtn.textContent = "Mint";
-            alertError(true, error.error.message || error?.data?.originalError?.message || error?.data?.message || error.message);
+
+            if (error?.code === "INSUFFICIENT_FUNDS") {
+                alertError(true, "Insufficient Funds. Please fund your account.");
+            } else {
+                getErrorMessage(error)
+            }
         }
     } catch (error) {
-        alertError(true, error?.data?.originalError?.message || error.message);
+        getErrorMessage(error)
     }
 };
 
@@ -153,7 +175,9 @@ window.addEventListener("load", async () => {
     if (provider && account) {
         const currentProvider = new ethers.providers.Web3Provider(provider);
         const signer = currentProvider.getSigner();
-        const nftContract = new ethers.Contract(config.contractAddress, ABI, signer);
+        const nftContract = new ethers.Contract(config.contractAddress, ABI, signer)
+
+        mintCounter.classList.add("mint__counter--show");
 
         const setMintedCounter = async () => {
             const counter = await nftContract.totalSupply();

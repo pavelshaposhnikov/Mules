@@ -729,6 +729,11 @@ summary::marker {
     font-weight: 700;
     color: #67B9DB;
     text-align: center;
+    visibility: hidden;
+}
+
+.mint__counter--show {
+    visibility: visible;
 }
 
 .mint__info {
