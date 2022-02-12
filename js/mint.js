@@ -130,7 +130,11 @@ const mint = async () => {
         const nftContract = new ethers.Contract(config.contractAddress, ABI, signer);
 
         const balance = +(await currentProvider.getBalance(account)).toString();
-
+        const isPaused = (await nftContract.paused());
+        if (isPaused) {
+            alertError(true, "Mint will start soon!");
+            return;
+        }
         if (balance === 0) {
             alertError(true, "Insufficient Funds. Please fund your account.");
             return;
@@ -147,9 +151,10 @@ const mint = async () => {
         const price = await nftContract.getPrice(counterNFT);
 
         const overrides = {
-            value: price  // ether in this case MUST be a string
+            value: price,  // ether in this case MUST be a string
+            gasLimit: "250000"
         };
-
+        console.log("Price: ", price.toString());
         mintBtn.disabled = true;
         mintBtn.textContent = "Minting...";
 
@@ -161,7 +166,6 @@ const mint = async () => {
         } catch (error) {
             mintBtn.disabled = false;
             mintBtn.textContent = "Mint";
-
             if (error?.code === "INSUFFICIENT_FUNDS") {
                 alertError(true, "Insufficient Funds. Please fund your account.");
             } else {
