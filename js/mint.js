@@ -140,7 +140,7 @@ const mint = async () => {
 
         const overrides = {
             value: price,  // ether in this case MUST be a string
-            gasLimit: "500000"
+            gasLimit: "200000"
         };
         console.log("Price: ", price.toString());
         mintBtn.disabled = true;
@@ -154,7 +154,6 @@ const mint = async () => {
         } catch (error) {
             mintBtn.disabled = false;
             mintBtn.textContent = "Mint";
-
             if (error?.code === "INSUFFICIENT_FUNDS") {
                 alertError(true, "Insufficient Funds. Please fund your account.");
             } else {
