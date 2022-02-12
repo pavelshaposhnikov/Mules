@@ -1,4 +1,4 @@
 export default {
-    mainChainId: "4",
-    contractAddress: "0x5f76C7A8c261e2236bD226b951E041e23Bc5FF6A",
+    mainChainId: "1",
+    contractAddress: "0xffd83161C80c1A146a7EF54814309cEC632F4539",
 }
