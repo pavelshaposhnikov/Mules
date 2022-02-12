@@ -191,6 +191,14 @@ window.addEventListener("load", async () => {
 
         mintCounter.classList.add("mint__counter--show");
 
+        provider.on('chainChanged', () => {
+            window.location.reload();
+        })
+
+        provider.on('accountsChanged', () => {
+            window.location.reload();
+        })
+
         const setMintedCounter = async () => {
             const counter = await nftContract.totalSupply();
             mintedCounter.textContent = prettyNumber(counter.toString());
