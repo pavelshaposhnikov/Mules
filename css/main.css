@@ -1669,6 +1669,7 @@ summary::marker {
 
 .faq__accordion {
     max-width: 660px;
+    width: 100%;
 }
 
 .faq__accordion-title {
@@ -1681,6 +1682,11 @@ summary::marker {
     padding-bottom: 20px;
     font-weight: 500;
     font-size: 22px;
+}
+
+.faq__accordion-title h3 {
+    max-width: 605px;
+    width: 100%;
 }
 
 .faq__accordion-title span {
