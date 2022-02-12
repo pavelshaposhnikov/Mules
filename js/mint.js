@@ -130,7 +130,11 @@ const mint = async () => {
         const nftContract = new ethers.Contract(config.contractAddress, ABI, signer);
 
         const balance = +(await currentProvider.getBalance(account)).toString();
-
+        const isPaused = (await nftContract.paused());
+        if (isPaused) {
+            alertError(true, "Mint will start soon!");
+            return;
+        }
         if (balance === 0) {
             alertError(true, "Insufficient Funds. Please fund your account.");
             return;
