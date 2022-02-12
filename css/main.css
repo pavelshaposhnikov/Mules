@@ -1829,12 +1829,8 @@ summary::marker {
     transition: all 0.5s ease;
 }
 
-.footer__socials-item:nth-child(2) .footer__socials-link {
-    background-color: #67B9DB;
-}
-
 .footer__socials-item:last-child .footer__socials-link {
-    background-color: #DCA9EF;
+    background-color: #67B9DB;
 }
 
 .footer__socials-link:hover {
@@ -1978,7 +1974,7 @@ summary::marker {
 ==========================*/
 
 .popup {
-    position: absolute;
+    position: fixed;
     z-index: 100;
     top: 0;
     left: 0;

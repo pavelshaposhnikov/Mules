@@ -136,6 +136,14 @@ const mint = async () => {
             return;
         }
 
+        const currentNFT = +(await nftContract.balanceOf(account)).toString();
+        const buyingCountNFT = Number(counterNFT) + currentNFT;
+
+        if (!(buyingCountNFT <= 10)) {
+            alertError(true, "You can't buy more than 10 NFT");
+            return;
+        }
+
         const price = await nftContract.getPrice(counterNFT);
 
         const overrides = {
